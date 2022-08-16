@@ -1,21 +1,13 @@
 import { Telegraf } from 'telegraf';
-import { LastMsgStore } from '../types';
-import { deleteLastMsg } from '../helpers';
 
-export function helpModule(bot: Telegraf, msgStore: LastMsgStore) {
-  bot.action('btn-help', async (ctx) => {
-    await deleteLastMsg(ctx, msgStore);
-
-    const msg = await ctx.reply('Help Information');
-    msgStore[msg.chat.id] = msg.message_id;
-
-    ctx.answerCbQuery();
+export function helpModule(bot: Telegraf) {
+  bot.help(async (ctx) => {
+    await ctx.reply('Help Information');
   });
 
-  bot.help(async (ctx) => {
-    await deleteLastMsg(ctx, msgStore);
+  bot.action('btn-help', async (ctx) => {
+    await ctx.reply('Help Information');
 
-    const msg = await ctx.reply('Help Information');
-    msgStore[msg.chat.id] = msg.message_id;
+    ctx.answerCbQuery();
   });
 }
