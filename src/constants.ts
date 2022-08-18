@@ -1,4 +1,14 @@
 import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
+import { Admin, DishMenuItem } from './types';
+
+export const Admins: Admin[] = [
+  {
+    id: 5391764441,
+    username: '',
+    firstName: 'Roman',
+    isSuper: true,
+  },
+];
 
 export const BotMenu = [
   { command: 'menu', description: 'Show Menu' },
@@ -26,7 +36,7 @@ export const AdminBotMenuKeyboard: InlineKeyboardButton[][] = [
   [{ text: 'Admin', callback_data: 'btn-admin' }],
 ];
 
-export const DishMenu = [
+export const DishMenu: DishMenuItem[] = [
   {
     name: 'Chashushuli',
     description: 'Traditional Georgian Soup',
@@ -47,8 +57,23 @@ export const DishMenu = [
   },
 ];
 
-export const LanguageKeyboard: InlineKeyboardButton[][] = [
+export const LanguageButtons: InlineKeyboardButton[][] = [
   [{ text: 'English', callback_data: 'language-en' }],
   [{ text: 'ქართული', callback_data: 'language-ka' }],
   [{ text: 'Русский', callback_data: 'language-ru' }],
+];
+
+export const ChangeAdminsButtons: InlineKeyboardButton[][] = [
+  [
+    { text: 'Add Admin', callback_data: 'add-admin' },
+    { text: 'Delete Admin', callback_data: 'change-admins' },
+  ],
+];
+
+export const AdminButtons: InlineKeyboardButton[][] = [
+  [{ text: 'Edit Menu', callback_data: 'edit-menu' }],
+  [
+    { text: 'Add Admin', callback_data: 'add-admin' },
+    { text: 'Delete Admin', callback_data: 'change-admins' },
+  ],
 ];

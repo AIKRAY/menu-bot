@@ -5,6 +5,7 @@ import {
   BotMenu,
   BotMenuKeyboard,
 } from './constants';
+import { isSuperAdmin } from './helpers';
 import {
   menuModule,
   languageModule,
@@ -16,7 +17,7 @@ import {
 const bot = new Telegraf('5459712119:AAF7YNTdP2QzTRY5AD0lXaTvKXC_ERgOJIk');
 
 bot.start(async (ctx) => {
-  if (ctx.from.id === 5391764441) {
+  if (isSuperAdmin(ctx.from.id)) {
     await ctx.reply('Choose an option:', {
       reply_markup: {
         inline_keyboard: AdminBotMenuKeyboard,
@@ -32,7 +33,7 @@ bot.start(async (ctx) => {
 
   await bot.telegram.deleteMyCommands();
 
-  if (ctx.from.id === 5391764441) {
+  if (isSuperAdmin(ctx.from.id)) {
     await bot.telegram.setMyCommands(AdminBotMenu);
   } else {
     await bot.telegram.setMyCommands(BotMenu);
