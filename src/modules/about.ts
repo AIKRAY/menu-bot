@@ -12,6 +12,6 @@ export function aboutModule(bot: Telegraf) {
       `This bot was created to make your life the best of the best!`
     );
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 }

@@ -6,8 +6,10 @@ export interface Admin {
 }
 
 export interface DishMenuItem {
+  id: number;
   name: string;
   description: string;
   img: string;
   price: number;
+  hidden: boolean;
 }

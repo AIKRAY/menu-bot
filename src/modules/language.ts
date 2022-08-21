@@ -17,21 +17,21 @@ export function languageModule(bot: Telegraf) {
       },
     });
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 
   bot.action('language-en', async (ctx) => {
-    ctx.reply('You have chosen English!');
-    ctx.answerCbQuery();
+    await ctx.reply('You have chosen English!');
+    await ctx.answerCbQuery();
   });
 
   bot.action('language-ka', async (ctx) => {
-    ctx.reply('შენ აირჩიე ქართული ენა!');
-    ctx.answerCbQuery();
+    await ctx.reply('შენ აირჩიე ქართული ენა!');
+    await ctx.answerCbQuery();
   });
 
   bot.action('language-ru', async (ctx) => {
-    ctx.reply('Вы выбрали русский язык!');
-    ctx.answerCbQuery();
+    await ctx.reply('Вы выбрали русский язык!');
+    await ctx.answerCbQuery();
   });
 }

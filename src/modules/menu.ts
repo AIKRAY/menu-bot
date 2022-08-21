@@ -1,6 +1,7 @@
 import { Context, Telegraf } from 'telegraf';
 import { DishMenu } from '../constants';
 import { getMenuItem } from '../helpers';
+import { DishMenuItem } from '../types';
 
 export function menuModule(bot: Telegraf) {
   bot.command('menu', async (ctx) => {
@@ -9,7 +10,7 @@ export function menuModule(bot: Telegraf) {
 
   bot.action('btn-menu', async (ctx) => {
     await replyWithMenu(bot, ctx);
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 
   bot.action('edit-menu', async (ctx) => {
@@ -17,27 +18,47 @@ export function menuModule(bot: Telegraf) {
       await bot.telegram.sendPhoto(ctx.chat!.id, `${item.img}`, {
         parse_mode: 'HTML',
         caption: getMenuItem(item),
-        reply_markup: {
-          inline_keyboard: [
-            [
-              { text: 'Edit', callback_data: 'edit-menu-item' },
-              { text: 'Delete', callback_data: 'delete-menu-item' },
-              { text: 'Hide', callback_data: 'hide-menu-item' },
-            ],
-          ],
-        },
+        reply_markup: getMenuControls(item),
       });
     }
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
+  });
+
+  bot.action(/toggle-menu-item (.+)/, async (ctx) => {
+    const menuItemId = Number(ctx.match[1]);
+
+    DishMenu.forEach((item) => {
+      if (item.id === menuItemId) {
+        item.hidden = !item.hidden;
+        ctx.editMessageReplyMarkup(getMenuControls(item));
+      }
+    });
+
+    await ctx.answerCbQuery();
   });
 }
 
 async function replyWithMenu(bot: Telegraf, ctx: Context) {
-  for (const item of DishMenu) {
+  for (const item of DishMenu.filter((item) => !item.hidden)) {
     await bot.telegram.sendPhoto(ctx.chat!.id, `${item.img}`, {
       parse_mode: 'HTML',
       caption: getMenuItem(item),
     });
   }
+}
+
+function getMenuControls(item: DishMenuItem) {
+  return {
+    inline_keyboard: [
+      [
+        { text: 'Edit', callback_data: 'edit-menu-item' },
+        { text: 'Delete', callback_data: 'delete-menu-item' },
+        {
+          text: item.hidden ? 'Show' : 'Hide',
+          callback_data: `toggle-menu-item ${item.id}`,
+        },
+      ],
+    ],
+  };
 }

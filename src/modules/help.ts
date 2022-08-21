@@ -7,7 +7,6 @@ export function helpModule(bot: Telegraf) {
 
   bot.action('btn-help', async (ctx) => {
     await ctx.reply('Help Information');
-
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 }

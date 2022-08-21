@@ -1,7 +1,7 @@
 import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
 import { Admin, DishMenuItem } from './types';
 
-export const Admins: Admin[] = [
+export let Admins: Admin[] = [
   {
     id: 5391764441,
     username: '',
@@ -38,22 +38,28 @@ export const AdminBotMenuKeyboard: InlineKeyboardButton[][] = [
 
 export const DishMenu: DishMenuItem[] = [
   {
+    id: 1,
     name: 'Chashushuli',
     description: 'Traditional Georgian Soup',
     img: 'https://georgianjournal.ge/media/_thumb/images/georgianews/2016/October/Cuisine/cane.jpg',
     price: 6,
+    hidden: false,
   },
   {
+    id: 2,
     name: 'Tolma',
     description: 'Grape leaf roll',
     img: 'https://aif-s3.aif.ru/images/015/673/7ccde42ab56c82cc9634cd20e3727bf7.jpg',
     price: 8,
+    hidden: false,
   },
   {
+    id: 3,
     name: 'Kebab',
     description: 'Meat sausage on a skewer',
     img: 'https://www.thespruceeats.com/thmb/S_8TXaL0crgFJ76Zj0BAj7EIKms=/1000x1000/smart/filters:no_upscale()/seekh-kabab-kebabs-on-skewers-1957575-hero-01-cd05e3002fc047dbb2dedb69c66a03e1.jpg',
     price: 10,
+    hidden: false,
   },
 ];
 
@@ -63,7 +69,7 @@ export const LanguageButtons: InlineKeyboardButton[][] = [
   [{ text: 'Русский', callback_data: 'language-ru' }],
 ];
 
-export const ChangeAdminsButtons: InlineKeyboardButton[][] = [
+export const AdminAddedButtons: InlineKeyboardButton[][] = [
   [
     { text: 'Add Admin', callback_data: 'add-admin' },
     { text: 'Delete Admin', callback_data: 'change-admins' },
@@ -72,8 +78,5 @@ export const ChangeAdminsButtons: InlineKeyboardButton[][] = [
 
 export const AdminButtons: InlineKeyboardButton[][] = [
   [{ text: 'Edit Menu', callback_data: 'edit-menu' }],
-  [
-    { text: 'Add Admin', callback_data: 'add-admin' },
-    { text: 'Delete Admin', callback_data: 'change-admins' },
-  ],
+  ...AdminAddedButtons,
 ];

@@ -1,5 +1,5 @@
 import { Telegraf } from 'telegraf';
-import { AdminButtons, Admins, ChangeAdminsButtons } from '../constants';
+import { AdminButtons, Admins, AdminAddedButtons } from '../constants';
 
 export function adminModule(bot: Telegraf) {
   bot.command('admin', async (ctx) => {
@@ -17,7 +17,7 @@ export function adminModule(bot: Telegraf) {
       },
     });
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 
   bot.action('add-admin', async (ctx) => {
@@ -25,24 +25,41 @@ export function adminModule(bot: Telegraf) {
       'Forward me any message from the user you want to make admin.'
     );
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
   });
 
   bot.action('change-admins', async (ctx) => {
-    for (const admin of Admins.filter((admin) => !admin.isSuper)) {
-      await ctx.replyWithHTML(
-        `${admin.firstName} ${admin.username && `(@${admin.username})`} `,
-        {
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: 'Delete', callback_data: 'delete-admin' }],
-            ],
-          },
-        }
-      );
+    const notAdmins = Admins.filter((admin) => !admin.isSuper);
+
+    if (notAdmins.length) {
+      for (const admin of notAdmins) {
+        await ctx.replyWithHTML(
+          `${admin.firstName} ${admin.username && `(@${admin.username})`} `,
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: 'Delete', callback_data: `delete-admin ${admin.id}` }],
+              ],
+            },
+          }
+        );
+      }
+    } else {
+      ctx.reply('Admin list is empty');
     }
 
-    ctx.answerCbQuery();
+    await ctx.answerCbQuery();
+  });
+
+  bot.action(/delete-admin (.+)/, async (ctx, sd) => {
+    const adminId = Number(ctx.match[1]);
+
+    const index = Admins.findIndex((item) => item.id === adminId);
+    if (index > -1) {
+      Admins.splice(index, 1);
+    }
+
+    await ctx.answerCbQuery();
   });
 
   bot.on('forward_date', async (ctx) => {
@@ -61,7 +78,7 @@ export function adminModule(bot: Telegraf) {
       } successfully added to admin list.`,
       {
         reply_markup: {
-          inline_keyboard: ChangeAdminsButtons,
+          inline_keyboard: AdminAddedButtons,
         },
       }
     );
