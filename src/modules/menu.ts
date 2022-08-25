@@ -37,6 +37,26 @@ export function menuModule(bot: Telegraf) {
 
     await ctx.answerCbQuery();
   });
+
+  bot.action(/edit-menu-item (.+)/, async (ctx) => {
+    const menuItemId = Number(ctx.match[1]);
+
+    await ctx.answerCbQuery();
+  });
+
+  bot.action(/delete-menu-item (.+)/, async (ctx) => {
+    const menuItemId = Number(ctx.match[1]);
+    const index = DishMenu.findIndex((item) => item.id === menuItemId);
+
+    if (index > -1) {
+      const itemToRemove = DishMenu[index];
+      DishMenu.splice(index, 1);
+      await ctx.deleteMessage();
+      await ctx.reply(`Menu item ${itemToRemove.name} has been removed`);
+    }
+
+    await ctx.answerCbQuery();
+  });
 }
 
 async function replyWithMenu(bot: Telegraf, ctx: Context) {
@@ -52,8 +72,8 @@ function getMenuControls(item: DishMenuItem) {
   return {
     inline_keyboard: [
       [
-        { text: 'Edit', callback_data: 'edit-menu-item' },
-        { text: 'Delete', callback_data: 'delete-menu-item' },
+        { text: 'Edit', callback_data: `edit-menu-item ${item.id}` },
+        { text: 'Delete', callback_data: `delete-menu-item ${item.id}` },
         {
           text: item.hidden ? 'Show' : 'Hide',
           callback_data: `toggle-menu-item ${item.id}`,

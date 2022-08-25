@@ -5,7 +5,7 @@ import {
   BotMenu,
   BotMenuKeyboard,
 } from './constants';
-import { isSuperAdmin } from './helpers';
+import { isSuperAdmin, newAdminMiddleware } from './helpers';
 import {
   menuModule,
   languageModule,
@@ -15,6 +15,8 @@ import {
 } from './modules';
 
 const bot = new Telegraf('5459712119:AAF7YNTdP2QzTRY5AD0lXaTvKXC_ERgOJIk');
+
+bot.use(newAdminMiddleware());
 
 bot.start(async (ctx) => {
   if (isSuperAdmin(ctx.from.id)) {
