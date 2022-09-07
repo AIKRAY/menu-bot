@@ -5,7 +5,14 @@ import {
   BotMenu,
   BotMenuKeyboard,
 } from './constants';
-import { isSuperAdmin, newAdminMiddleware } from './helpers';
+import {
+  dishDescriptionMiddleware,
+  dishImageMiddleware,
+  dishNameMiddleware,
+  dishPriceMiddleware,
+  isSuperAdmin,
+  newAdminMiddleware,
+} from './helpers';
 import {
   menuModule,
   languageModule,
@@ -17,6 +24,10 @@ import {
 const bot = new Telegraf('5459712119:AAF7YNTdP2QzTRY5AD0lXaTvKXC_ERgOJIk');
 
 bot.use(newAdminMiddleware());
+bot.use(dishNameMiddleware());
+bot.use(dishDescriptionMiddleware());
+bot.use(dishImageMiddleware());
+bot.use(dishPriceMiddleware());
 
 bot.start(async (ctx) => {
   if (isSuperAdmin(ctx.from.id)) {
