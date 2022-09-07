@@ -37,11 +37,17 @@ export function menuModule(bot: Telegraf) {
 
   bot.action('edit-menu', async (ctx) => {
     for (const item of DishMenu) {
-      await bot.telegram.sendPhoto(ctx.chat!.id, `${item.img}`, {
-        parse_mode: 'HTML',
-        caption: getMenuItem(item),
-        reply_markup: getMenuControls(item),
-      });
+      const savedImg = await s3ServiceInstance.getImage(item.img);
+
+      await bot.telegram.sendPhoto(
+        ctx.chat!.id,
+        { source: savedImg as Buffer },
+        {
+          parse_mode: 'HTML',
+          caption: getMenuItem(item),
+          reply_markup: getMenuControls(item),
+        }
+      );
     }
 
     await ctx.answerCbQuery();
@@ -134,10 +140,16 @@ export function menuModule(bot: Telegraf) {
 
 async function replyWithMenu(bot: Telegraf, ctx: Context) {
   for (const item of DishMenu.filter((item) => !item.hidden)) {
-    await bot.telegram.sendPhoto(ctx.chat!.id, `${item.img}`, {
-      parse_mode: 'HTML',
-      caption: getMenuItem(item),
-    });
+    const savedImg = await s3ServiceInstance.getImage(item.img);
+
+    await bot.telegram.sendPhoto(
+      ctx.chat!.id,
+      { source: savedImg as Buffer },
+      {
+        parse_mode: 'HTML',
+        caption: getMenuItem(item),
+      }
+    );
   }
 }
 
