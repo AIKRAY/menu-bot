@@ -1,6 +1,5 @@
 import S3 from 'aws-sdk/clients/s3';
 import { config } from '../config';
-import { DishMenu } from '../constants';
 
 export class S3Service {
   private s3: S3;

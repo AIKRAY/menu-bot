@@ -116,7 +116,7 @@ export function menuModule(bot: Telegraf) {
         {
           parse_mode: 'HTML',
           caption: getMenuItem(NewDish as DishMenuItem),
-          reply_markup: getMenuControls(NewDish as DishMenuItem),
+          reply_markup: getMenuControlsForNewItem(NewDish as DishMenuItem),
         }
       );
       return;
@@ -164,6 +164,15 @@ function getMenuControls(item: DishMenuItem) {
           callback_data: `toggle-menu-item ${item.id}`,
         },
       ],
+    ],
+  };
+}
+
+function getMenuControlsForNewItem(item: DishMenuItem) {
+  return {
+    inline_keyboard: [
+      ...getMenuControls(item).inline_keyboard,
+      [{ text: 'Add more', callback_data: `add-menu-item` }],
     ],
   };
 }
