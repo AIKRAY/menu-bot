@@ -1,22 +1,14 @@
-import { Telegraf } from 'telegraf';
-import { AdminButtons, Admins, AdminAddedButtons } from '../constants';
-import { isReadyForNewAdmin, readyForNewAdmin } from '../helpers';
+import { Context, Telegraf } from 'telegraf';
+import { AdminKeyboard, Admins, AdminAddedKeyboard } from '../constants';
+import { isAdmin, isReadyForNewAdmin, readyForNewAdmin } from '../helpers';
 
 export function adminModule(bot: Telegraf) {
   bot.command('admin', async (ctx) => {
-    await ctx.reply('Choose an action:', {
-      reply_markup: {
-        inline_keyboard: AdminButtons,
-      },
-    });
+    await replyWithAdminKeyboard(ctx);
   });
 
   bot.action('btn-admin', async (ctx) => {
-    await ctx.reply('Choose an action:', {
-      reply_markup: {
-        inline_keyboard: AdminButtons,
-      },
-    });
+    await replyWithAdminKeyboard(ctx);
     await ctx.answerCbQuery();
   });
 
@@ -81,7 +73,7 @@ export function adminModule(bot: Telegraf) {
         } successfully added to admin list.`,
         {
           reply_markup: {
-            inline_keyboard: AdminAddedButtons,
+            inline_keyboard: AdminAddedKeyboard,
           },
         }
       );
@@ -89,4 +81,16 @@ export function adminModule(bot: Telegraf) {
       readyForNewAdmin(false);
     }
   });
+}
+
+function replyWithAdminKeyboard(ctx: Context) {
+  if (isAdmin(ctx.from!.id)) {
+    return ctx.reply('Choose an action:', {
+      reply_markup: {
+        inline_keyboard: AdminKeyboard,
+      },
+    });
+  }
+
+  return ctx.reply(`You don't have administrator permissions.`);
 }

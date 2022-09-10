@@ -70,21 +70,21 @@ export const DishMenu: DishMenuItem[] = [
   },
 ];
 
-export const LanguageButtons: InlineKeyboardButton[][] = [
+export const LanguageKeyboard: InlineKeyboardButton[][] = [
   [{ text: 'English', callback_data: 'language-en' }],
   [{ text: 'ქართული', callback_data: 'language-ka' }],
   [{ text: 'Русский', callback_data: 'language-ru' }],
 ];
 
-export const AdminAddedButtons: InlineKeyboardButton[][] = [
+export const AdminAddedKeyboard: InlineKeyboardButton[][] = [
   [
     { text: 'Add Admin', callback_data: 'add-admin' },
     { text: 'Delete Admin', callback_data: 'change-admins' },
   ],
 ];
 
-export const AdminButtons: InlineKeyboardButton[][] = [
+export const AdminKeyboard: InlineKeyboardButton[][] = [
   [{ text: 'Edit Menu', callback_data: 'edit-menu' }],
   [{ text: 'Add Menu Item', callback_data: 'add-menu-item' }],
-  ...AdminAddedButtons,
+  ...AdminAddedKeyboard,
 ];

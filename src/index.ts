@@ -10,7 +10,7 @@ import {
   dishImageMiddleware,
   dishNameMiddleware,
   dishPriceMiddleware,
-  isSuperAdmin,
+  isAdmin,
   newAdminMiddleware,
 } from './helpers';
 import {
@@ -30,27 +30,17 @@ bot.use(dishImageMiddleware());
 bot.use(dishPriceMiddleware());
 
 bot.start(async (ctx) => {
-  if (isSuperAdmin(ctx.from.id)) {
-    await ctx.reply('Choose an option:', {
-      reply_markup: {
-        inline_keyboard: AdminBotMenuKeyboard,
-      },
-    });
-  } else {
-    await ctx.reply('Choose an option:', {
-      reply_markup: {
-        inline_keyboard: BotMenuKeyboard,
-      },
-    });
-  }
-
+  await ctx.reply('Choose an option:', {
+    reply_markup: {
+      inline_keyboard: isAdmin(ctx.from.id)
+        ? AdminBotMenuKeyboard
+        : BotMenuKeyboard,
+    },
+  });
   await bot.telegram.deleteMyCommands();
-
-  if (isSuperAdmin(ctx.from.id)) {
-    await bot.telegram.setMyCommands(AdminBotMenu);
-  } else {
-    await bot.telegram.setMyCommands(BotMenu);
-  }
+  await bot.telegram.setMyCommands(
+    isAdmin(ctx.from.id) ? AdminBotMenu : BotMenu
+  );
 });
 
 menuModule(bot);

@@ -1,11 +1,11 @@
 import { Telegraf } from 'telegraf';
-import { LanguageButtons } from '../constants';
+import { LanguageKeyboard } from '../constants';
 
 export function languageModule(bot: Telegraf) {
   bot.command('language', async (ctx) => {
     await ctx.reply('Choose your language:', {
       reply_markup: {
-        inline_keyboard: LanguageButtons,
+        inline_keyboard: LanguageKeyboard,
       },
     });
   });
@@ -13,7 +13,7 @@ export function languageModule(bot: Telegraf) {
   bot.action('btn-language', async (ctx) => {
     await ctx.reply('Choose your language:', {
       reply_markup: {
-        inline_keyboard: LanguageButtons,
+        inline_keyboard: LanguageKeyboard,
       },
     });
 

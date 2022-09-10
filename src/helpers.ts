@@ -11,8 +11,8 @@ export let isReadyForDishDescription = false;
 export let isReadyForDishImage = false;
 export let isReadyForDishPrice = false;
 
-export function isSuperAdmin(id: number) {
-  return Admins.some((admin) => admin.isSuper && admin.id === id);
+export function isAdmin(id: number) {
+  return Admins.some((admin) => admin.id === id);
 }
 
 export function getMenuItem(item: DishMenuItem) {
