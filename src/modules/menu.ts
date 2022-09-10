@@ -1,12 +1,17 @@
 import { Context, Telegraf } from 'telegraf';
 import { DishMenu, NewDish } from '../constants';
 import {
+  replyWithMenu,
+  getMenuItem,
+  getMenuControls,
+  getMenuControlsForNewItem,
+} from '../helpers';
+import {
   addDishDescription,
   addDishName,
   addDishPhoto,
   addDishPrice,
   addDishToDishMenu,
-  getMenuItem,
   isReadyForDishDescription,
   isReadyForDishImage,
   isReadyForDishName,
@@ -136,43 +141,4 @@ export function menuModule(bot: Telegraf) {
       await ctx.reply('Send the dish price');
     }
   });
-}
-
-async function replyWithMenu(bot: Telegraf, ctx: Context) {
-  for (const item of DishMenu.filter((item) => !item.hidden)) {
-    const savedImg = await s3ServiceInstance.getImage(item.img);
-
-    await bot.telegram.sendPhoto(
-      ctx.chat!.id,
-      { source: savedImg as Buffer },
-      {
-        parse_mode: 'HTML',
-        caption: getMenuItem(item),
-      }
-    );
-  }
-}
-
-function getMenuControls(item: DishMenuItem) {
-  return {
-    inline_keyboard: [
-      [
-        { text: 'Edit', callback_data: `edit-menu-item ${item.id}` },
-        { text: 'Delete', callback_data: `delete-menu-item ${item.id}` },
-        {
-          text: item.hidden ? 'Show' : 'Hide',
-          callback_data: `toggle-menu-item ${item.id}`,
-        },
-      ],
-    ],
-  };
-}
-
-function getMenuControlsForNewItem(item: DishMenuItem) {
-  return {
-    inline_keyboard: [
-      ...getMenuControls(item).inline_keyboard,
-      [{ text: 'Add more', callback_data: `add-menu-item` }],
-    ],
-  };
 }

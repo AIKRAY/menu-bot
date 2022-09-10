@@ -16,7 +16,6 @@ import {
 import {
   menuModule,
   languageModule,
-  helpModule,
   aboutModule,
   adminModule,
 } from './modules';
@@ -45,7 +44,6 @@ bot.start(async (ctx) => {
 
 menuModule(bot);
 languageModule(bot);
-helpModule(bot);
 aboutModule(bot);
 adminModule(bot);
 
