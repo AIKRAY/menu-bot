@@ -22,7 +22,7 @@ export function readyForDishDescription(isReady: boolean) {
   isReadyForDishDescription = isReady;
 }
 
-export function readyForDishImage(isReady: boolean) {
+export function readyForDishImg(isReady: boolean) {
   isReadyForDishImage = isReady;
 }
 

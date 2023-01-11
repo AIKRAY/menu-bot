@@ -1,10 +1,17 @@
-import { Context, Telegraf } from 'telegraf';
-import { DishMenu, NewDish } from '../constants';
+import { Telegraf } from 'telegraf';
+import { DishMenu, EditDishKeyboard, NewDish } from '../constants';
 import {
   replyWithMenu,
-  getMenuItem,
   getMenuControls,
-  getMenuControlsForNewItem,
+  getMenuControlsForNewDish,
+  setDishForEdit,
+  dishForEdit,
+  editDishName,
+  editDishDescription,
+  editDishPrice,
+  editDishPhoto,
+  getDishById,
+  replyWithDish,
 } from '../helpers';
 import {
   addDishDescription,
@@ -17,12 +24,11 @@ import {
   isReadyForDishName,
   isReadyForDishPrice,
   readyForDishDescription,
-  readyForDishImage,
+  readyForDishImg,
   readyForDishName,
   readyForDishPrice,
 } from '../helpers';
-import { s3ServiceInstance } from '../services';
-import { DishMenuItem } from '../types';
+import { Dish } from '../types';
 
 export function menuModule(bot: Telegraf) {
   bot.command('menu', async (ctx) => {
@@ -34,97 +40,138 @@ export function menuModule(bot: Telegraf) {
     await ctx.answerCbQuery();
   });
 
-  bot.action('add-menu-item', async (ctx) => {
+  bot.action('add-dish', async (ctx) => {
     readyForDishName(true);
     await ctx.reply('Send the dish name');
     await ctx.answerCbQuery();
   });
 
   bot.action('edit-menu', async (ctx) => {
-    for (const item of DishMenu) {
-      const savedImg = await s3ServiceInstance.getImage(item.img);
-
-      await bot.telegram.sendPhoto(
-        ctx.chat!.id,
-        { source: savedImg as Buffer },
-        {
-          parse_mode: 'HTML',
-          caption: getMenuItem(item),
-          reply_markup: getMenuControls(item),
-        }
-      );
+    for (const dish of DishMenu) {
+      await replyWithDish(ctx, dish, getMenuControls(dish));
     }
 
     await ctx.answerCbQuery();
   });
 
-  bot.action(/toggle-menu-item (.+)/, async (ctx) => {
-    const menuItemId = Number(ctx.match[1]);
+  bot.action(/toggle-dish (.+)/, async (ctx) => {
+    const dishId = Number(ctx.match[1]);
 
-    DishMenu.forEach((item) => {
-      if (item.id === menuItemId) {
-        item.hidden = !item.hidden;
-        ctx.editMessageReplyMarkup(getMenuControls(item));
+    DishMenu.forEach((dish) => {
+      if (dish.id === dishId) {
+        dish.hidden = !dish.hidden;
+        ctx.editMessageReplyMarkup(getMenuControls(dish));
       }
     });
 
     await ctx.answerCbQuery();
   });
 
-  bot.action(/edit-menu-item (.+)/, async (ctx) => {
-    const menuItemId = Number(ctx.match[1]);
-    // TODO: implement
+  bot.action(/edit-dish (.+)/, async (ctx) => {
+    const dishForEdit = getDishById(Number(ctx.match[1]));
+    setDishForEdit(dishForEdit);
+    readyForDishName(true);
+
+    await ctx.replyWithHTML('What do you want to change?', {
+      reply_markup: {
+        inline_keyboard: EditDishKeyboard,
+      },
+    });
     await ctx.answerCbQuery();
   });
 
-  bot.action(/delete-menu-item (.+)/, async (ctx) => {
-    const menuItemId = Number(ctx.match[1]);
-    const index = DishMenu.findIndex((item) => item.id === menuItemId);
+  bot.action(/delete-dish (.+)/, async (ctx) => {
+    const dishId = Number(ctx.match[1]);
+    const index = DishMenu.findIndex((dish) => dish.id === dishId);
 
     if (index > -1) {
-      const itemToRemove = DishMenu[index];
+      const dishToRemove = DishMenu[index];
       DishMenu.splice(index, 1);
       await ctx.deleteMessage();
-      await ctx.reply(`Menu item ${itemToRemove.name} has been removed`);
+      await ctx.reply(`Dish ${dishToRemove.name} has been removed`);
     }
 
+    await ctx.answerCbQuery();
+  });
+
+  bot.action('edit-name', async (ctx) => {
+    console.log('test');
+    readyForDishName(true);
+    await ctx.reply('Send the dish name');
+    await ctx.answerCbQuery();
+  });
+
+  bot.action('edit-description', async (ctx) => {
+    readyForDishDescription(true);
+    await ctx.reply('Send the dish description');
+    await ctx.answerCbQuery();
+  });
+
+  bot.action('edit-img', async (ctx) => {
+    readyForDishImg(true);
+    await ctx.reply('Send the dish photo');
+    await ctx.answerCbQuery();
+  });
+
+  bot.action('edit-price', async (ctx) => {
+    readyForDishPrice(true);
+    await ctx.reply('Send the dish price');
     await ctx.answerCbQuery();
   });
 
   bot.on('text', async (ctx, next) => {
     if (isReadyForDishName) {
-      addDishName(ctx.message.text);
-      readyForDishName(false);
-      readyForDishDescription(true);
-      await ctx.reply('Send the dish description');
-      return;
-    }
-    if (isReadyForDishDescription) {
-      addDishDescription(ctx.message.text);
-      readyForDishDescription(false);
-      readyForDishImage(true);
-      await ctx.reply('Send the dish image');
-      return;
-    }
-    if (isReadyForDishPrice) {
-      addDishPrice(ctx.message.text);
-      addDishToDishMenu();
-      readyForDishPrice(false);
-      await ctx.reply('Your dish has been added successfully');
+      if (dishForEdit) {
+        editDishName(dishForEdit, ctx.message.text);
+        await ctx.reply('Your dish has been updated successfully');
+        await replyWithDish(ctx, dishForEdit, getMenuControls(dishForEdit));
+        setDishForEdit(undefined);
+      } else {
+        addDishName(ctx.message.text);
+        readyForDishName(false);
+        readyForDishDescription(true);
+        await ctx.reply('Send the dish description');
+        console.log('else', dishForEdit);
+      }
 
-      const savedImg = await s3ServiceInstance.getImage(NewDish.img!);
-      await bot.telegram.sendPhoto(
-        ctx.chat!.id,
-        // TODO: test if we can use just telegram server storage
-        // 'AgACAgIAAxkBAAIHBWMY3aGn7u1qImhmEpPMZwAB1oPQVAACGMsxG5eXyUig-3xL3PuM7gEAAwIAA20AAykE', // file_id
-        { source: savedImg as Buffer },
-        {
-          parse_mode: 'HTML',
-          caption: getMenuItem(NewDish as DishMenuItem),
-          reply_markup: getMenuControlsForNewItem(NewDish as DishMenuItem),
-        }
-      );
       return;
+    }
+
+    if (isReadyForDishDescription) {
+      if (dishForEdit) {
+        editDishDescription(dishForEdit, ctx.message.text);
+        await ctx.reply('Your dish has been updated successfully');
+        await replyWithDish(ctx, dishForEdit, getMenuControls(dishForEdit));
+        setDishForEdit(undefined);
+      } else {
+        addDishDescription(ctx.message.text);
+        readyForDishDescription(false);
+        readyForDishImg(true);
+        await ctx.reply('Send the dish image');
+        return;
+      }
+    }
+
+    if (isReadyForDishPrice) {
+      if (dishForEdit) {
+        editDishPrice(dishForEdit, ctx.message.text);
+        await ctx.reply('Your dish has been updated successfully');
+        await replyWithDish(ctx, dishForEdit, getMenuControls(dishForEdit));
+        setDishForEdit(undefined);
+      } else {
+        addDishPrice(ctx.message.text);
+        addDishToDishMenu();
+        readyForDishPrice(false);
+
+        await ctx.reply('Your dish has been added successfully');
+        await replyWithDish(
+          ctx,
+          NewDish as Dish,
+          getMenuControlsForNewDish(NewDish as Dish)
+        );
+
+        return;
+      }
     }
 
     next();
@@ -135,10 +182,18 @@ export function menuModule(bot: Telegraf) {
       const fileLink = await ctx.telegram.getFileLink(
         ctx.message.photo[ctx.message.photo.length - 1].file_id
       );
-      addDishPhoto(fileLink);
-      readyForDishImage(false);
-      readyForDishPrice(true);
-      await ctx.reply('Send the dish price');
+
+      if (dishForEdit) {
+        editDishPhoto(dishForEdit, fileLink);
+        await ctx.reply('Your dish has been updated successfully');
+        await replyWithDish(ctx, dishForEdit, getMenuControls(dishForEdit));
+        setDishForEdit(undefined);
+      } else {
+        addDishPhoto(fileLink);
+        readyForDishImg(false);
+        readyForDishPrice(true);
+        await ctx.reply('Send the dish price');
+      }
     }
   });
 }

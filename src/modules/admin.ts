@@ -1,6 +1,10 @@
-import { Context, Telegraf } from 'telegraf';
-import { AdminKeyboard, Admins, AdminAddedKeyboard } from '../constants';
-import { isAdmin, isReadyForNewAdmin, readyForNewAdmin } from '../helpers';
+import { Telegraf } from 'telegraf';
+import { Admins, AdminAddedKeyboard } from '../constants';
+import {
+  isReadyForNewAdmin,
+  readyForNewAdmin,
+  replyWithAdminKeyboard,
+} from '../helpers';
 
 export function adminModule(bot: Telegraf) {
   bot.command('admin', async (ctx) => {
@@ -45,7 +49,7 @@ export function adminModule(bot: Telegraf) {
 
   bot.action(/delete-admin (.+)/, async (ctx, sd) => {
     const adminId = Number(ctx.match[1]);
-    const index = Admins.findIndex((item) => item.id === adminId);
+    const index = Admins.findIndex((admin) => admin.id === adminId);
 
     if (index > -1) {
       const { firstName, username } = Admins[index];
@@ -81,16 +85,4 @@ export function adminModule(bot: Telegraf) {
       readyForNewAdmin(false);
     }
   });
-}
-
-function replyWithAdminKeyboard(ctx: Context) {
-  if (isAdmin(ctx.from!.id)) {
-    return ctx.reply('Choose an action:', {
-      reply_markup: {
-        inline_keyboard: AdminKeyboard,
-      },
-    });
-  }
-
-  return ctx.reply(`You don't have administrator permissions.`);
 }

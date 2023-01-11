@@ -8,15 +8,17 @@ import {
   isReadyForDishDescription,
   readyForDishDescription,
   isReadyForDishImage,
-  readyForDishImage,
+  readyForDishImg,
   isReadyForDishPrice,
   readyForDishPrice,
+  dishForEdit,
 } from '../helpers';
 
 export function newAdminMiddleware(): Middleware<Context> {
   return async (ctx, next) => {
     if (
       isReadyForNewAdmin &&
+      !dishForEdit &&
       !(ctx.message as Message.CommonMessage)?.forward_from
     ) {
       await replyWithInvalidMessageWarningText(ctx, 'adding an admin');
@@ -28,7 +30,11 @@ export function newAdminMiddleware(): Middleware<Context> {
 
 export function dishNameMiddleware(): Middleware<Context> {
   return async (ctx, next) => {
-    if (isReadyForDishName && !(ctx.message as Message.TextMessage).text) {
+    if (
+      isReadyForDishName &&
+      !dishForEdit &&
+      !(ctx.message as Message.TextMessage)?.text
+    ) {
       await replyWithInvalidMessageWarningText(ctx, 'adding a dish name');
       readyForDishName(false);
     }
@@ -40,7 +46,8 @@ export function dishDescriptionMiddleware(): Middleware<Context> {
   return async (ctx, next) => {
     if (
       isReadyForDishDescription &&
-      !(ctx.message as Message.TextMessage).text
+      !dishForEdit &&
+      !(ctx.message as Message.TextMessage)?.text
     ) {
       await replyWithInvalidMessageWarningText(
         ctx,
@@ -54,9 +61,13 @@ export function dishDescriptionMiddleware(): Middleware<Context> {
 
 export function dishImageMiddleware(): Middleware<Context> {
   return async (ctx, next) => {
-    if (isReadyForDishImage && !(ctx.message as Message.PhotoMessage).photo) {
+    if (
+      isReadyForDishImage &&
+      !dishForEdit &&
+      !(ctx.message as Message.PhotoMessage)?.photo
+    ) {
       await replyWithInvalidMessageWarningText(ctx, 'adding a dish image');
-      readyForDishImage(false);
+      readyForDishImg(false);
     }
     next();
   };
@@ -64,7 +75,11 @@ export function dishImageMiddleware(): Middleware<Context> {
 
 export function dishPriceMiddleware(): Middleware<Context> {
   return async (ctx, next) => {
-    if (isReadyForDishPrice && !(ctx.message as Message.TextMessage).text) {
+    if (
+      isReadyForDishPrice &&
+      !dishForEdit &&
+      !(ctx.message as Message.TextMessage)?.text
+    ) {
       await replyWithInvalidMessageWarningText(ctx, 'adding a dish price');
       readyForDishPrice(false);
     }

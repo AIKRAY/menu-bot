@@ -5,7 +5,7 @@ export interface Admin {
   isSuper: boolean;
 }
 
-export interface DishMenuItem {
+export interface Dish {
   id: number;
   name: string;
   description: string;

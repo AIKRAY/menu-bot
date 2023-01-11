@@ -1,5 +1,5 @@
 import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
-import { Admin, DishMenuItem } from './types';
+import { Admin, Dish } from './types';
 
 export const Admins: Admin[] = [
   {
@@ -10,7 +10,7 @@ export const Admins: Admin[] = [
   },
 ];
 
-export const NewDish: Partial<DishMenuItem> = {
+export const NewDish: Partial<Dish> = {
   hidden: false,
 };
 
@@ -40,7 +40,7 @@ export const AdminBotMenuKeyboard: InlineKeyboardButton[][] = [
   [{ text: 'Admin', callback_data: 'btn-admin' }],
 ];
 
-export const DishMenu: DishMenuItem[] = [
+export const DishMenu: Dish[] = [
   {
     id: 0,
     name: 'Chashushuli',
@@ -85,6 +85,18 @@ export const AdminAddedKeyboard: InlineKeyboardButton[][] = [
 
 export const AdminKeyboard: InlineKeyboardButton[][] = [
   [{ text: 'Edit Menu', callback_data: 'edit-menu' }],
-  [{ text: 'Add Menu Item', callback_data: 'add-menu-item' }],
+  [{ text: 'Add Dish', callback_data: 'add-dish' }],
   ...AdminAddedKeyboard,
+];
+
+export const EditDishKeyboard: InlineKeyboardButton[][] = [
+  [{ text: 'Name', callback_data: 'edit-name' }],
+  [
+    {
+      text: 'Description',
+      callback_data: 'edit-description',
+    },
+  ],
+  [{ text: 'Photo', callback_data: 'edit-img' }],
+  [{ text: 'Price', callback_data: 'edit-price' }],
 ];
