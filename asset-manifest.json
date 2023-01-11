@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.fcb11eea.js",
-    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/index.html",
-    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.fcb11eea.js.map": "/static/js/main.fcb11eea.js.map",
-    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/AIKRAY/menu-bot/static/css/main.073c9b0a.css",
+    "main.js": "/AIKRAY/menu-bot/static/js/main.028ac2a4.js",
+    "static/js/787.28cb0dcd.chunk.js": "/AIKRAY/menu-bot/static/js/787.28cb0dcd.chunk.js",
+    "static/media/logo.svg": "/AIKRAY/menu-bot/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/AIKRAY/menu-bot/index.html",
+    "main.073c9b0a.css.map": "/AIKRAY/menu-bot/static/css/main.073c9b0a.css.map",
+    "main.028ac2a4.js.map": "/AIKRAY/menu-bot/static/js/main.028ac2a4.js.map",
+    "787.28cb0dcd.chunk.js.map": "/AIKRAY/menu-bot/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.fcb11eea.js"
+    "static/js/main.028ac2a4.js"
   ]
 }
