@@ -1,0 +1,23 @@
+.home {
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .cards-layout {
+    display: grid;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1rem;
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      width: 100%;
+    }
+  }
+}

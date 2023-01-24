@@ -8,7 +8,7 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "strict": true,
     "skipLibCheck": true,

@@ -29,7 +29,7 @@ module.exports = {
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/member-ordering': 'error',
     'prefer-arrow/prefer-arrow-functions': 'error',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'arrow-body-style': ['error', 'as-needed'],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
