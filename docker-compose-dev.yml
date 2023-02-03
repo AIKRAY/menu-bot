@@ -1,0 +1,13 @@
+services:
+  client:
+    image: menu-bot-client
+    container_name: menu-bot-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_TOKEN=$GITHUB_TOKEN
+    ports:
+      - '3000:3000'
+#TODO: check if it works without other images listed here, just with working local backend, if not then add it.
+# should we add link to .env here as for backend?

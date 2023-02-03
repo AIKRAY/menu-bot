@@ -1,3 +1,5 @@
+[![Deploy Docker Image](https://github.com/AIKRAY/menu-bot-front/actions/workflows/deploy-docker-image.yml/badge.svg)](https://github.com/AIKRAY/menu-bot-front/actions/workflows/deploy-docker-image.yml)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

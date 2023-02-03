@@ -1,11 +1,15 @@
 module.exports = {
   env: {
     es2020: true,
-    jest: true,
-    node: true,
     browser: true,
+    jest: true,
   },
-  extends: ['react-app', 'airbnb-typescript', 'plugin:prettier/recommended'],
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'plugin:prettier/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
@@ -14,28 +18,26 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['simple-import-sort', 'prettier', 'prefer-arrow'],
+  plugins: ['@typescript-eslint', 'prefer-arrow', 'simple-import-sort'],
   settings: {
     react: {
       version: 'detect',
     },
   },
   rules: {
-    'prettier/prettier': 'error',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
-    'react/jsx-key': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/member-ordering': 'error',
-    'prefer-arrow/prefer-arrow-functions': 'error',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/lines-between-class-members': [
+      'error',
+      'always',
+      { exceptAfterSingleLine: true },
+    ],
+    'prefer-arrow/prefer-arrow-functions': 'error',
     'arrow-body-style': ['error', 'as-needed'],
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'import/prefer-default-export': 'off',
-    'react/no-danger': 'off',
-    'jsx-a11y/anchor-is-valid': 'off',
     'padding-line-between-statements': [
       'error',
       {
@@ -44,20 +46,23 @@ module.exports = {
         next: 'return',
       },
     ],
+    'react/jsx-uses-react': 'off',
+    'react/jsx-key': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/no-danger': 'off',
+    'react/function-component-definition': [
+      2,
+      { namedComponents: 'arrow-function' },
+    ],
     'react/require-default-props': [
       'error',
       { forbidDefaultForRequired: true, ignoreFunctionalComponents: true },
     ],
-    '@typescript-eslint/lines-between-class-members': [
-      'error',
-      'always',
-      { exceptAfterSingleLine: true },
-    ],
+    'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
     'jsx-a11y/interactive-supports-focus': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
-    'no-plusplus': 'off',
-    'react-hooks/exhaustive-deps': 'off',
-    'import/no-extraneous-dependencies': 'off',
+    'no-param-reassign': 'error',
+    'import/prefer-default-export': 'off',
   },
 };

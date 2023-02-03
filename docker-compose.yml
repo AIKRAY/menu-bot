@@ -1,0 +1,9 @@
+services:
+  client:
+    image: $DOCKER_REGISTRY/menu-bot-client
+    container_name: menu-bot-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_TOKEN=$GITHUB_TOKEN
