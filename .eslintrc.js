@@ -46,6 +46,8 @@ module.exports = {
         next: 'return',
       },
     ],
+    'no-param-reassign': 'error',
+    'import/prefer-default-export': 'off',
     'react/jsx-uses-react': 'off',
     'react/jsx-key': 'error',
     'react/react-in-jsx-scope': 'off',
@@ -62,7 +64,5 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
     'jsx-a11y/interactive-supports-focus': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
-    'no-param-reassign': 'error',
-    'import/prefer-default-export': 'off',
   },
 };
