@@ -1,6 +1,7 @@
 // this file works only for development
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { createProxyMiddleware } = require('http-proxy-middleware');
-
+Ц
 module.exports = app => {
   app.use(
     '/api',
