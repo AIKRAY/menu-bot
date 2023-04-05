@@ -11,14 +11,14 @@ interface FooterProps {}
 
 export const Footer = (_: FooterProps) => (
   <footer className={cx('footer')}>
-    <NavLink to={RESTAURANTS_PAGE} className="page-link">
+    <NavLink to={RESTAURANTS_PAGE} className={cx('page-link')}>
       {({ isActive }) => (
         <Button type={isActive ? 'primary' : 'default'} size="large" block>
           Restaurants
         </Button>
       )}
     </NavLink>
-    <NavLink to={SEARCH_PAGE} className="page-link">
+    <NavLink to={SEARCH_PAGE} className={cx('page-link')}>
       {({ isActive }) => (
         <Button type={isActive ? 'primary' : 'default'} size="large" block>
           Search

@@ -1,14 +1,26 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import { HOME_PAGE } from '../../routes/pages';
+import { SEARCH_TYPE_CITIES, SEARCH_TYPE_RESTAURANTS } from './constants';
+import { CitiesSearch, RestaurantsSearch } from './supported-searches';
+
+// TODO: change to some fallback
+const EmptyComponent = () => <div />;
 
 export const SearchPage = () => {
-  const { state } = useLocation();
-  console.log(state);
+  const { state: locationState } = useLocation();
 
-  return (
-    <div>
-      <NavLink to={HOME_PAGE}>Go to Home</NavLink>
-    </div>
-  );
+  let SearchComponent = EmptyComponent;
+
+  switch (locationState.type) {
+    case SEARCH_TYPE_CITIES:
+      SearchComponent = CitiesSearch;
+      break;
+    case SEARCH_TYPE_RESTAURANTS:
+      SearchComponent = RestaurantsSearch;
+      break;
+    default:
+      break;
+  }
+
+  return <SearchComponent />;
 };
