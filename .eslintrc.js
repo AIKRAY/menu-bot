@@ -27,10 +27,11 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+    'no-debugger': 'warn',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/member-ordering': 'error',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/lines-between-class-members': [
       'error',
       'always',
