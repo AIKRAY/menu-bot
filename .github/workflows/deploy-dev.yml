@@ -15,6 +15,11 @@ jobs:
         with:
           node-version: 18
 
+      - name: Configure git profile
+        run: |
+          git config --global user.email "amsterget@gmail.com"
+          git config --global user.name "amsterget"
+
       - name: Install of node dependencies
         run: sh install-modules.sh
         env:
