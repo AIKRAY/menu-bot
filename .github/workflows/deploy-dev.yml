@@ -19,6 +19,7 @@ jobs:
         run: |
           git config --global user.email "amsterget@gmail.com"
           git config --global user.name "amsterget"
+          git remote set-url origin https://${{ secrets.GIT_HUB_PERSONAL_TOKEN }}@github.com/${{ github.repository }}"
 
       - name: Install of node dependencies
         run: sh install-modules.sh
