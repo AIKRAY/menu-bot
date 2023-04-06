@@ -4,7 +4,7 @@ import { API_URL } from 'core/constants';
 // Telegram webapp object
 const tg = window.Telegram?.WebApp;
 
-const ITIN_DATA = tg.initData;
+const INIT_DATA = tg.initData;
 /*
  * to test without telegram instead tg.initData use your test initData
  * example: 'query_id=xxx&user=%22%3A%22xxx%22%2C%22first_name%22%3A%22xxx%22%2C%22last_name%22%3A%22xxx%22%2C%22username%22%3A%22xxx%22%2C%22language_code%22%3A%22ru%22%7D&auth_date=1680733421&hash=xxx'
@@ -25,12 +25,12 @@ export const fetchQuery = async <ResponseType, RequestBody = unknown>({
   ...options
 }: QueryOptions<RequestBody>): Promise<ResponseType> => {
   const queryHeaders = new Headers({
-    authorization: ITIN_DATA,
+    authorization: INIT_DATA,
     ...headers,
   });
 
   let url = `${API_URL}${path}`;
-  if (params) url += `${new URLSearchParams(params)}${path}`;
+  if (params) url += new URLSearchParams(params);
 
   const response = await fetch(url, {
     ...options,
