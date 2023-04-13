@@ -1,7 +1,7 @@
-const MINSK = 'minsk';
-const TBILISI = 'tbilisi';
-const MOSCOW = 'moscow';
-const TASHKENT = 'tashkent';
+const MINSK = 'Minsk';
+const TBILISI = 'Tbilisi';
+const MOSCOW = 'Moscow';
+const TASHKENT = 'Tashkent';
 
 export const supportedCities = [MINSK, TBILISI, MOSCOW, TASHKENT];
 

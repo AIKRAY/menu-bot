@@ -6,11 +6,12 @@ import { supportedCities } from '../../data';
 import { SearchWithList } from '../../search-with-list';
 
 export const CitiesSearch = () => {
-  const [cities, setCities] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>(supportedCities);
 
   const onSearchCities = (event: ChangeEvent<HTMLInputElement>) => {
+    const userInput = String(event.target.value).toLowerCase();
     const foundCities = supportedCities.filter(cityName =>
-      cityName.includes(event.target.value)
+      cityName.toLowerCase().includes(userInput)
     );
     setCities(foundCities);
   };
