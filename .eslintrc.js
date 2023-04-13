@@ -27,7 +27,6 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
-    'no-debugger': 'warn',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/member-ordering': 'error',
@@ -65,5 +64,6 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
     'jsx-a11y/interactive-supports-focus': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'no-debugger': 'warn',
   },
 };

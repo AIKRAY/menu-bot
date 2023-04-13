@@ -1,6 +1,9 @@
 import { API_URL } from 'core/constants';
 
-// @ts-ignore
+declare namespace window {
+  let Telegram: { WebApp: { initData: string } };
+}
+
 // Telegram webapp object
 const tg = window.Telegram?.WebApp;
 
