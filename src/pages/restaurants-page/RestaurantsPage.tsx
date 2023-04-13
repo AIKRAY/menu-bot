@@ -24,7 +24,11 @@ export const RestaurantsPage = () => {
     <div className={cx('restaurants-page')}>
       {currentCity ? (
         <>
-          <span className={cx('current-city')}>{currentCity}</span>
+          <span className={cx('current-city')}>
+            <Link to={SEARCH_PAGE} state={{ type: SEARCH_TYPE_CITIES }}>
+              {currentCity}
+            </Link>
+          </span>
           <Link to={SEARCH_PAGE} state={{ type: SEARCH_TYPE_RESTAURANTS }}>
             <Button icon={<SearchOutlined />} size="large">
               Restaurants

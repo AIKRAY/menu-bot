@@ -11,6 +11,10 @@
   padding: 10px 5px;
 }
 
+.current-city a {
+  text-decoration: none;
+}
+
 .no-city-block {
   display: flex;
   align-items: center;

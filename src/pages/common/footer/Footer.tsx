@@ -2,7 +2,7 @@ import Button from 'antd/lib/button';
 import classNames from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
 
-import { RESTAURANTS_PAGE, SEARCH_PAGE } from '../../../routes/pages';
+import { PROFILE_PAGE, RESTAURANTS_PAGE } from '../../../routes/pages';
 import styles from './Footer.module.css';
 
 const cx = classNames.bind(styles);
@@ -18,7 +18,7 @@ export const Footer = (_: FooterProps) => (
         </Button>
       )}
     </NavLink>
-    <NavLink to={SEARCH_PAGE} className={cx('page-link')}>
+    <NavLink to={PROFILE_PAGE} className={cx('page-link')}>
       {({ isActive }) => (
         <Button type={isActive ? 'primary' : 'default'} size="large" block>
           Search
