@@ -1,7 +1,6 @@
 import './App.css';
 
-import axios from 'axios';
-import { API_URL } from 'core/constants';
+import { fetchQuery } from 'core/fetchQuery';
 import { useEffect, useState } from 'react';
 
 import logo from './logo.svg';
@@ -11,10 +10,11 @@ export const App = () => {
 
   useEffect(() => {
     const getAppStatus = async () => {
-      const response = await axios.get<string>(`${API_URL}/app/health-check`);
+      const response = await fetchQuery<{ status: string }>({
+        path: `/app/health-check`,
+      });
 
-      console.log(response);
-      setAppStatus(response.data);
+      setAppStatus(response.status);
     };
 
     getAppStatus();

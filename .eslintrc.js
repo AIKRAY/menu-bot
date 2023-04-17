@@ -30,7 +30,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/prefer-readonly': 'error',
     '@typescript-eslint/member-ordering': 'error',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/lines-between-class-members': [
       'error',
       'always',
@@ -64,5 +64,6 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': [2, { assert: 'either' }],
     'jsx-a11y/interactive-supports-focus': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'no-debugger': 'warn',
   },
 };
