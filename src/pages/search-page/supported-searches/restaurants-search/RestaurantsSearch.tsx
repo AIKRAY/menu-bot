@@ -8,7 +8,6 @@ import { SearchWithList } from '../../search-with-list';
 
 export const RestaurantsSearch = () => {
   const { selectedCity } = useContext(StoreContext);
-  console.log('RestaurantsSearch: ', selectedCity);
   const [restaurants, setRestaurants] = useState<string[]>(
     restaurantsByCities[selectedCity] || []
   );
