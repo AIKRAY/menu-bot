@@ -14,11 +14,3 @@
 .current-city a {
   text-decoration: none;
 }
-
-.no-city-block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: calc(100% - 80px);
-}

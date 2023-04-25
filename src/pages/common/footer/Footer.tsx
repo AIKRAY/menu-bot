@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 
 interface FooterProps {}
 
+// TODO: use tabs instead of buttons
 export const Footer = (_: FooterProps) => (
   <footer className={cx('footer')}>
     <NavLink to={RESTAURANTS_PAGE} className={cx('page-link')}>

@@ -5,11 +5,11 @@ import { PROFILE_PAGE, RESTAURANTS_PAGE, SEARCH_PAGE } from './pages';
 export default [
   {
     path: RESTAURANTS_PAGE,
-    component: () => <RestaurantsPage />,
+    component: RestaurantsPage,
   },
   {
     path: SEARCH_PAGE,
-    component: () => <SearchPage />,
+    component: SearchPage,
   },
   {
     path: PROFILE_PAGE,

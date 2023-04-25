@@ -1,23 +1,21 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 
+import { StoreContext } from '../../../../providers/store-provider';
 // TODO: will lead to particular restaurant page
 import { RESTAURANTS_PAGE } from '../../../../routes/pages';
-import { LOCAL_STORAGE_SAVED_CITY_KEY } from '../../constants';
 import { restaurantsByCities } from '../../data';
 import { SearchWithList } from '../../search-with-list';
 
 export const RestaurantsSearch = () => {
-  // TODO: move to React.Context & update storing mechanism
-  const currentCity: string = localStorage.getItem(
-    LOCAL_STORAGE_SAVED_CITY_KEY
-  ) as string;
+  const { selectedCity } = useContext(StoreContext);
+  console.log('RestaurantsSearch: ', selectedCity);
   const [restaurants, setRestaurants] = useState<string[]>(
-    restaurantsByCities[currentCity] || []
+    restaurantsByCities[selectedCity] || []
   );
 
   const onSearchCities = (event: ChangeEvent<HTMLInputElement>) => {
     const userInput = String(event.target.value).toLowerCase();
-    const restaurantsInParticularCity = restaurantsByCities[currentCity];
+    const restaurantsInParticularCity = restaurantsByCities[selectedCity];
     const foundRestaurants = restaurantsInParticularCity.filter(
       (restaurantName: string) =>
         restaurantName.toLowerCase().includes(userInput)

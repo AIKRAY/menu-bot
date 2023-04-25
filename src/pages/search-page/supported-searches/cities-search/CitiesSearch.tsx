@@ -1,11 +1,12 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 
+import { StoreDispatchContext } from '../../../../providers/store-provider';
 import { RESTAURANTS_PAGE } from '../../../../routes/pages';
-import { LOCAL_STORAGE_SAVED_CITY_KEY } from '../../constants';
 import { supportedCities } from '../../data';
 import { SearchWithList } from '../../search-with-list';
 
 export const CitiesSearch = () => {
+  const dispatch = useContext(StoreDispatchContext);
   const [cities, setCities] = useState<string[]>(supportedCities);
 
   const onSearchCities = (event: ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +18,7 @@ export const CitiesSearch = () => {
   };
 
   const onCityClick = (cityName: string) => {
-    localStorage.setItem(LOCAL_STORAGE_SAVED_CITY_KEY, cityName);
+    dispatch({ selectedCity: cityName });
   };
 
   return (
