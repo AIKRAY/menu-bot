@@ -1,3 +1,4 @@
+import { ProfilePage } from '../pages/profile-page';
 import { RestaurantsPage } from '../pages/restaurants-page';
 import { SearchPage } from '../pages/search-page';
 import { PROFILE_PAGE, RESTAURANTS_PAGE, SEARCH_PAGE } from './pages';
@@ -13,6 +14,6 @@ export default [
   },
   {
     path: PROFILE_PAGE,
-    component: () => <div />,
+    component: ProfilePage,
   },
 ];

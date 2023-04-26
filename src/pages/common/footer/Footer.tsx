@@ -1,4 +1,4 @@
-import Button from 'antd/lib/button';
+import { ShopOutlined, UserOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
 
@@ -9,22 +9,29 @@ const cx = classNames.bind(styles);
 
 interface FooterProps {}
 
-// TODO: use tabs instead of buttons
+const navItems = [
+  {
+    id: 'restaurants',
+    to: RESTAURANTS_PAGE,
+    icon: ShopOutlined,
+  },
+  {
+    id: 'profile',
+    to: PROFILE_PAGE,
+    icon: UserOutlined,
+  },
+];
+
 export const Footer = (_: FooterProps) => (
   <footer className={cx('footer')}>
-    <NavLink to={RESTAURANTS_PAGE} className={cx('page-link')}>
-      {({ isActive }) => (
-        <Button type={isActive ? 'primary' : 'default'} size="large" block>
-          Restaurants
-        </Button>
-      )}
-    </NavLink>
-    <NavLink to={PROFILE_PAGE} className={cx('page-link')}>
-      {({ isActive }) => (
-        <Button type={isActive ? 'primary' : 'default'} size="large" block>
-          Search
-        </Button>
-      )}
-    </NavLink>
+    <nav className={cx('navigation')}>
+      {navItems.map(({ id, to, icon: Icon }) => (
+        <NavLink key={id} to={to}>
+          {({ isActive }) => (
+            <Icon className={cx('nav-icon', isActive ? 'active' : '')} />
+          )}
+        </NavLink>
+      ))}
+    </nav>
   </footer>
 );
