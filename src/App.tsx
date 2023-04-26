@@ -13,6 +13,7 @@ export const App = () => {
         path: `/app/health-check`,
       });
 
+      // eslint-disable-next-line no-console
       console.log(response.status);
     };
 
