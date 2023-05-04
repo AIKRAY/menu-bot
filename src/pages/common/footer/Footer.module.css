@@ -1,0 +1,22 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
+  border-top: 1px solid var(--color-primary);
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-icon {
+  font-size: 40px;
+  color: var(--color-default);
+}
+.nav-icon.active {
+  color: var(--color-primary);
+}

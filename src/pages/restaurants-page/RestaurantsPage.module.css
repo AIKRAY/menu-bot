@@ -1,0 +1,16 @@
+.restaurants-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.current-city {
+  display: flex;
+  justify-content: center;
+  padding: 10px 5px;
+}
+
+.current-city a {
+  text-decoration: none;
+}

@@ -26,11 +26,13 @@
   },
   "dependencies": {
     "@aikray/menu-bot-common": "^0.0.8",
+    "@ant-design/icons": "^5.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
+    "antd": "^5.2.2",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,0 +1,9 @@
+.search-with-list {
+  padding: 10px;
+}
+
+.entity-item {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}

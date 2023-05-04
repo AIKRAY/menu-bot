@@ -15,10 +15,16 @@ jobs:
         with:
           node-version: 18
 
+      - name: Configure git profile
+        run: |
+          git config --global user.email "amsterget@gmail.com"
+          git config --global user.name "amsterget"
+          git remote set-url origin https://${{ secrets.GIT_HUB_PERSONAL_TOKEN }}@github.com/${{ github.repository }}
+
       - name: Install of node dependencies
         run: sh install-modules.sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_PERSONAL_TOKEN }}
 
       - name: Deploy
         run: npm run deploy
